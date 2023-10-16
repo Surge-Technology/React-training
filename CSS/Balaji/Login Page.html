@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Surge</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        input[type="date"] {
+            width: 90%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .submit {
+            color: white;
+            background-color: #283eb8;
+        }
+
+        .cancel {
+            color: white;
+            background-color: blueviolet;
+            border: #283eb8;
+        }
+
+        .submit:hover,
+        .cancel:hover {
+            background-color: brown;
+            
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h3>Login Page</h3>
+        <label>First Name</label>
+        <input type="text"><br><br>
+        <label>Last Name</label>
+        <input type="text"><br><br>
+        <label>Email</label>
+        <input type="email"><br><br>
+        <label>Mobile Number</label>
+        <input type="number"><br><br>
+        <label>Applying Date</label>
+        <input type="date"><br><br>
+        <button class="submit btn">Submit</button>
+        <button class="cancel btn">Cancel</button>
+    </div>
+</body>
+</html>
