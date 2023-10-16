@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        heloo
+    </div>
+    <big>
+        wd lnk
+    </big>
+    
+</body>
+<script>
+    const person={
+        name:'adsfgfd',
+        money:'123456u',
+         protections: function () {
+            console.log(`name is ${this.age} and ring is ${this.ishuman}`);
+
+         }
+    }
+    const me=Object.create(person);
+    me.age=12;
+    me.ishuman=false;
+    me.protections();
+
+    //object prefedined
+    const contentString = "Hello, world";
+
+const big= document.body.innerHTML = contentString.big();
+console.log("big"+big);
+    const obj= new String('goat');
+    console.log(obj);
+    console.log("valueOf",obj.valueOf());
+    console.log("chartAt",obj.charAt(-1));
+    document.body.innerHTML=obj.blink();
+    console.log("bold",document.body.innerHTML);
+    console.log("blink",obj.blink)
+    console.log("big",obj.big)
+    console.log("concat",obj.concat('man'))
+</script>
+</html>
