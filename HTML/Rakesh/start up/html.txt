@@ -1,0 +1,20 @@
+Html-HyperText Markup Language
+Bluding Block of web page
+
+Hyper Text ->text which takes to next page
+Markup -> set of symbols insert in text document control its structure and formating
+---------------------------------------->
+For short cut key to generate Html code -(Shift +! enter)
+
+<!DOCTYPE html>  -> it refer html 5 version
+
+
+---------------------------------------->
+Tags
+<>  ->open tag
+</> ->close tag
+<h> ->heading tag 
+<P> ->paragraph tag is used for writing  a text
+<a> ->Anchor tag for giving link 
+<img>-> image tag
+<hr> ->horizontal tag

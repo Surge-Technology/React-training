@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Surge</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Surge</h1>
+    </header>
+    <div class="form">
+        <h4>Log In To Account</h4>
+        <div class="login">
+            <!-- Add First Name and Last Name input fields -->
+            <input type="text" placeholder="First Name" id="firstName">
+            <input type="text" placeholder="Last Name" id="lastName">
+            
+            <!-- Add a Role dropdown -->
+            <select id="role" >
+                <option value="Admin">Admin</option>
+                <option value="User">User</option>
+                <option value="Manager">Manager</option>
+            </select>
+            
+            <input type="password" placeholder="Password" id="password">
+            <!-- Add a submit button with an event listener -->
+            <button id="submitBtn">Submit</button>
+        </div>
+        <div class="suggests">
+            <div class="remember">
+                <input type="checkbox" checked>
+                <span>Remember Me</span>
+            </div>
+            <div class="forgot">
+                <span>Forgot Password?</span>
+            </div>
+        </div>
+    </div>
+
+    <footer></footer>
+
+    <script>
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            // Get the values of First Name, Last Name, Role, and Password
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const role = document.getElementById('role').value;
+            const password = document.getElementById('password').value;
+    
+            // Log the values to the console
+            console.log('First Name:', firstName);
+            console.log('Last Name:', lastName);
+            console.log('Role:', role);
+            console.log('Password:', password);
+    
+            // Clear the input fields after submission
+            document.getElementById('firstName').value = '';
+            document.getElementById('lastName').value = '';
+            document.getElementById('role').value = '';
+            document.getElementById('password').value = '';
+        });
+    </script>
+</body>
+</html>

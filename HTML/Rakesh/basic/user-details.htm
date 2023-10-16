@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Details</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>User Details</h1>
+    </header>
+    <div class="user-details-form">
+        <h4>Fill in User Details</h4>
+        <div class="details">
+            <input type="text" placeholder="Email" id="email">
+            <input type="text" placeholder="Phone Number" id="phoneNumber">
+            <input type="text" placeholder="Address" id="address">
+            <button id="submitDetailsBtn">Submit Details</button>
+        </div>
+    </div>
+
+    <footer></footer>
+
+    <script>
+        document.getElementById('submitDetailsBtn').addEventListener('click', function() {
+            // Get the values of User Details
+            const email = document.getElementById('email').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const address = document.getElementById('address').value;
+
+            // Log the values to the console (you can also send them to a server)
+            console.log('Email:', email);
+            console.log('Phone Number:', phoneNumber);
+            console.log('Address:', address);
+
+            // Clear the input fields after submission
+            document.getElementById('email').value = '';
+            document.getElementById('phoneNumber').value = '';
+            document.getElementById('address').value = '';
+        });
+    </script>
+</body>
+</html>
