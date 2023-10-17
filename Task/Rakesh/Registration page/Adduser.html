@@ -35,7 +35,7 @@
 
         /* Style for input fields */
         .user-form input[type="text"],
-        .user-form input[type="email"] {
+        .user-form input[type="password"] {
             width: 250px;
             padding: 5px;
         }
@@ -105,11 +105,11 @@
             <label for="firstName">First Name:</label>
             <input type="text" id="firstName" name="FirstName" placeholder="Enter First Name" required>
             <br>
-            <label for="lastName">Last Name:</label>
-            <input type="text" id="lastName" name="LastName" placeholder="Enter Last Name" required>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="Username" placeholder="Enter Username" required>
             <br>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="Email" placeholder="example@gmail.com" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter Password" required>
             <br>
             <button type="submit" class="button">Add User</button>
         </form>
@@ -119,8 +119,8 @@
     <table>
         <tr>
             <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
+            <th>Username</th>
+            <th>Password</th>
             <th>Action</th>
         </tr>
         <!-- Table rows with user details will be added here -->
@@ -128,11 +128,11 @@
 
     <!-- JavaScript -->
     <script>
-        // Function to add a user to the table
+        // Function to add a user to the table and session storage
         function addUser() {
             const firstName = document.getElementById("firstName").value;
-            const lastName = document.getElementById("lastName").value;
-            const email = document.getElementById("email").value;
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
 
             // Create a new row in the table
             const table = document.querySelector("table");
@@ -145,21 +145,33 @@
             const cell4 = newRow.insertCell(3);
 
             cell1.innerHTML = firstName;
-            cell2.innerHTML = lastName;
-            cell3.innerHTML = email;
+            cell2.innerHTML = username;
+            cell3.innerHTML = password;
             cell4.innerHTML = '<button class="delete-button" onclick="deleteUser(this)">Delete</button>';
+
+            // Store user details in session storage
+            const users = JSON.parse(sessionStorage.getItem("users")) || [];
+            users.push({ firstName, username, password });
+            sessionStorage.setItem("users", JSON.stringify(users));
 
             // Clear the form
             document.getElementById("firstName").value = "";
-            document.getElementById("lastName").value = "";
-            document.getElementById("email").value = "";
+            document.getElementById("username").value = "";
+            document.getElementById("password").value = "";
 
             return false; // Prevent form submission
         }
 
-        // Function to delete a user from the table
+        // Function to delete a user from the table and session storage
         function deleteUser(button) {
             const row = button.parentNode.parentNode;
+            const username = row.cells[1].innerText;
+
+            // Remove user from session storage
+            const users = JSON.parse(sessionStorage.getItem("users")) || [];
+            const updatedUsers = users.filter(user => user.username !== username);
+            sessionStorage.setItem("users", JSON.stringify(updatedUsers));
+
             row.parentNode.removeChild(row);
         }
     </script>
