@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>User Add Details Page</title>
+    <style>
+        /* General styles for the body and form */
+        body {
+            background-color: rgb(230, 236, 240);
+            font-family: sans-serif;
+        }
+
+        /* Header styles */
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+        /* User form styles */
+        .user-form {
+            background: beige;
+            padding: 10px;
+            text-align: center;
+        }
+
+        /* Style for labels */
+        .user-form label {
+            display: inline-block;
+            width: 120px;
+            text-align: right;
+            margin-right: 10px;
+        }
+
+        /* Style for input fields */
+        .user-form input[type="text"],
+        .user-form input[type="email"] {
+            width: 250px;
+            padding: 5px;
+        }
+
+        /* Style for buttons */
+        .user-form .button {
+            background-color: rgb(66, 173, 36);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 18px;
+            margin: 10px 5px;
+            cursor: pointer;
+        }
+
+        .user-form .button:hover {
+            background: #ffc107;
+            color: #000;
+        }
+
+        /* Table styles */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #333;
+            color: white;
+        }
+
+        /* Style for delete button in the table */
+        .delete-button {
+            background-color: red;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            background-color: #ff5757;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <h1>User Add Details Page</h1>
+    </header>
+
+    <!-- User form -->
+    <div class="user-form">
+        <form id="userForm" onsubmit="return addUser();">
+            <h2>Add User</h2>
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="FirstName" placeholder="Enter First Name" required>
+            <br>
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="LastName" placeholder="Enter Last Name" required>
+            <br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="Email" placeholder="example@gmail.com" required>
+            <br>
+            <button type="submit" class="button">Add User</button>
+        </form>
+    </div>
+
+    <!-- User Table -->
+    <table>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+        <!-- Table rows with user details will be added here -->
+    </table>
+
+    <!-- JavaScript -->
+    <script>
+        // Function to add a user to the table
+        function addUser() {
+            const firstName = document.getElementById("firstName").value;
+            const lastName = document.getElementById("lastName").value;
+            const email = document.getElementById("email").value;
+
+            // Create a new row in the table
+            const table = document.querySelector("table");
+            const newRow = table.insertRow(-1);
+
+            // Insert user details into the row
+            const cell1 = newRow.insertCell(0);
+            const cell2 = newRow.insertCell(1);
+            const cell3 = newRow.insertCell(2);
+            const cell4 = newRow.insertCell(3);
+
+            cell1.innerHTML = firstName;
+            cell2.innerHTML = lastName;
+            cell3.innerHTML = email;
+            cell4.innerHTML = '<button class="delete-button" onclick="deleteUser(this)">Delete</button>';
+
+            // Clear the form
+            document.getElementById("firstName").value = "";
+            document.getElementById("lastName").value = "";
+            document.getElementById("email").value = "";
+
+            return false; // Prevent form submission
+        }
+
+        // Function to delete a user from the table
+        function deleteUser(button) {
+            const row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+    </script>
+</body>
+
+</html>
