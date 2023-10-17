@@ -7,14 +7,31 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: rgb(230, 236, 240);
             font-family: sans-serif;
+            overflow: hidden; /* Hide overflow to prevent scrollbars */
+        }
+
+        /* Define styles for the video container */
+        .video-container {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            overflow: hidden;
+        }
+
+        /* Style the video to cover the entire container */
+        video {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
         }
 
         .loginbox {
             width: 350px;
             height: 420px;
-            background: black;
+            background: rgba(0, 0, 0, 0.6); /* Add background overlay for better readability */
             color: white;
             top: 50%;
             left: 50%;
@@ -92,6 +109,13 @@
 </head>
 
 <body>
+    <!-- Video background container -->
+    <div class="video-container">
+        <video autoplay loop muted>
+            <source src="bg.mp4" type="video/mp4">
+        </video>
+    </div>
+
     <div class="loginbox">
         <img src="loginavatar.png" class="avatar">
         <h1>Login Here</h1>
