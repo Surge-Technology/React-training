@@ -1,0 +1,9 @@
+.container {
+    margin-top: 7rem;
+}
+#passwordError,#userNameError{
+    color: #ff0202
+}
+.form-group{
+    padding-top: 10px;
+}

@@ -1,0 +1,38 @@
+.payheading{
+    
+    display: contents;
+    flex-direction: row;
+    width: 150px;
+    padding: 30px;
+    border: 1px solid #ccc;
+    border-radius: 15px;  
+}
+.credit-card-fields{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+.stripe-fields{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.paybody{
+  display: contents;
+    /* text-align: center; */
+}
+.pay-button {
+    padding: 10px 20px;
+    background-color: #3f51b5;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .pay-button:hover {
+    background-color: #1e2d5a;
+  }
+  

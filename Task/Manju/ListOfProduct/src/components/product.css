@@ -1,0 +1,90 @@
+.product-table {
+    border-collapse: collapse;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  
+  .product-table th, .product-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .product-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .product-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .product-table button {
+    background-color: #f44336;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }
+  /* .navbar{
+    background-color: #272b34;
+    color: white;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: right;
+    justify-content:space-evenly ;
+    text-align: right;
+    padding: 1.5rem 20rem 12px;
+    width:25%;
+
+  } */
+  .navbar {
+    width: 98%;
+    background-color: #272b34;
+    color: white;
+    float: left;
+    padding: 12px;
+    align-content: center;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* Navigation links */
+  /* .navbar a {
+    float: left;
+    padding: 12px;
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
+    width: 25%; /* Four equal-width links. If you have two links, use 50%, and 33.33% for three links, etc.. */
+    /* text-align: center; 
+  }  */
+  
+  
+  
+  .footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    background-color:#272b34;
+    text-align: center;
+    color: white;
+    box-sizing: border-box;
+
+  }
+  nav .logo {
+    display: flex;
+    
+    font-size: 30px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  

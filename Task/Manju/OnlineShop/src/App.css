@@ -1,0 +1,55 @@
+.App {
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
+  text-align: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+  .label{
+  display: block;
+  font-size: larger;
+  color:rgb(30, 21, 21);
+  padding: 5px;
+  }
+  
+  .input{
+  font-size: larger;
+  padding: 5px;
+  margin: 2px;
+  
+  }
+  .btn{
+  color: white;
+  background-color: red;
+  border-radius: 5px;
+  font-size: larger;
+  display: block;
+  padding: 5px;
+  margin: 10px auto;
+  }
+  
+  .messages{
+    display: flex;
+  justify-content: center;
+  }
+  
+  .error{
+  display: block;
+  color: rgba(25, 128, 121, 0.879);
+  width: fit-content;
+  height: 50px;
+  padding: 5px;
+  }
+  
+  .success{
+  display: block;
+  color: black;
+  width: fit-content;
+  height: 50px;
+  padding: 5px;
+  }
