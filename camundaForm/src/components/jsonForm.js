@@ -1,273 +1,289 @@
 /* eslint-disable react/jsx-no-undef */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useRef} from "react";
 import moment from "moment";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   CCard,
-  CInputGroupText,
   CCardBody,
   CCol,
-  CFormTextarea,
   CForm,
   CFormInput,
   CFormLabel,
   CButton,
-  CFormCheck,
-  CFormSelect,
   CCardHeader,
-  CFormText,
 } from "@coreui/react";
 import axios from "axios";
-import { Alert } from "bootstrap";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 const JsonForm = () => {
   const [users, setUsers] = useState({});
-  const [error, setError] = useState(false);
-  const [formData, setFormData] = useState({});
-  const [submitClicked, setSubmitClicked] = useState(false);
-  const [data1, setData1] = useState(null);
-  const [data2, setData2] = useState(null);
-const[claim,setClaim]=useState(null);
-const[loading,setLoading]=useState(null)
+  const [claim, setClaim] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const isMounted = useRef(true);
 
-  const navigate=useNavigate();
-  var processInstanceKey = sessionStorage.getItem("key");
-  var stringValue = String(processInstanceKey);
+  const navigate = useNavigate();
+  const processInstanceKey = sessionStorage.getItem("key");
+  const stringValue = String(processInstanceKey);
+  // useEffect(() => {
+  //   fetchData();
+  //   checkAssigneeStatus();
+  // }, []);
 
-//console.log("pid",processInstanceKey);
+  // const fetchData = async () => {
+  //   console.log("stringValue",stringValue);
+
+  //   try {
+  //     const apiRequestDelay = 3000;
+  //     await new Promise((resolve) => setTimeout(resolve, apiRequestDelay));
+  //     window.location.reload(); 
+
+  //     const response = await axios.get(
+  //       `http://localhost:8080/camunda/getformdata-byinstanceKey/${stringValue}`
+  //     );
+  //     setUsers(response.data);
+  //     Swal.fire({
+  //       icon: "error",
+  //       title: "Alert",
+  //       text: "No form  here!",
+  //     }).then((result) => {
+  //       // If the user clicks "OK," navigate to the login page
+  //       if (result.isConfirmed) {
+  //         navigate("/");
+  //       }
+  //     });
+  //     await checkAssigneeStatus();
+
+  //     // After fetching data, check the assignee status
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+     
+  //   }
+  //   return () => {
+  //     isMounted.current = false;
+  //   };
+  // };
   useEffect(() => {
-    console.log("here..",stringValue)
-    axios
-      .get(
-        // `http://localhost:8080/camunda/getformbyinstanceKey/${stringValue}`
-        `http://localhost:8080/camunda/getformdata-byinstanceKeys/${stringValue}`
-      )
-      .then(function (response) {
-        console.log("Response from JSON:", response.data);
+    const fetchDataAndReload = async () => {
+      try {
+        // const apiRequestDelay = 1000;
+        // await new Promise((resolve) => setTimeout(resolve, apiRequestDelay));
+  
+        const response = await axios.get(
+          `http://localhost:8080/camunda/getformdata-byinstanceKey/${stringValue}`
+        );
+        if (!response.data) {
+          Swal.fire({
+            icon: "error",
+            title: "Alert",
+            text: "No form here!",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              navigate("/");
+            }
+          });
+          return; 
+        }
+        
         setUsers(response.data);
-      })
-      .catch(function (response) {
-        console.log("Error in response:", response);
-        setError(true);
-      })
-      .finally(function (response) {
-        console.log("Finally executed!!");
-      });
-      const hasClaimedTask = sessionStorage.getItem("hasClaimedTask") === "true";
-    setClaim(hasClaimedTask);
+  
+         await checkAssigneeStatus();
+  
+       // window.location.reload();
+      } catch (error) {
+        console.error("Error fetching data:", error);
+  
+        // Swal.fire({
+        //   icon: "error",
+        //   title: "Alert",
+        //   text: "No form here!",
+        // }).then((result) => {
+        //   if (result.isConfirmed) {
+        //     navigate("/");
+        //   }
+        // });
+      }
+    };
+  
+    fetchDataAndReload();
   }, []);
-  const handleClaim = async () => {
-    try {
-      setLoading(true);
+  
 
+  const handleClaim = async () => {
+    setLoading(true);
+    try {
       const claimApiResponse = await axios.get(
         `http://localhost:8080/camunda/getClaimActiveTaskID/${stringValue}`
       );
-
-      setData1(claimApiResponse.data);
-      setClaim(true);
-
-      setLoading(false);
+      // setClaim(true);
+      // checkAssigneeStatus();
+      await checkAssigneeStatus();
+    setClaim(true);
+    console.log(("claim",claimApiResponse.data));
     } catch (error) {
       console.error("Error in the claim API call:", error);
+    } finally {
       setLoading(false);
     }
   };
-  
-  const handleUnclaim = async () => {
-    try {
-      setLoading(true);
 
-      const unclaimApiResponse = await axios.get(
+  const handleUnclaim = async () => {
+    setLoading(true);
+    try {
+    
+      const  unclaimApiResponse = await axios.get(
         `http://localhost:8080/camunda/getUnClaimActiveTaskID/${stringValue}`
       );
-
-      setData2(unclaimApiResponse.data);
+      console.log("unclaim",unclaimApiResponse.data);
       setClaim(false);
-
-      sessionStorage.setItem("hasClaimedTask", "false");
-
-      setLoading(false);
+      checkAssigneeStatus();
     } catch (error) {
       console.error("Error in the unclaim API call:", error);
+    } finally {
       setLoading(false);
     }
   };
-  const handleSubmit = async () => {
-    try {
-      setLoading(true);
 
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
       const submitApiResponse = await axios.get(
         `http://localhost:8080/camunda/getCompleteActiveTaskID/${stringValue}`
       );
-
       console.log("Data from the submit API call:", submitApiResponse.data);
-
-      setLoading(false);
+      window.location.reload();
     } catch (error) {
       console.error("Error in the submit API call:", error);
+    } finally {
       setLoading(false);
     }
   };
 
-  // const handleButtonClick = async () => {
-  //   try {
-  //    // First API call
-  //     // const firstApiResponse = await axios.get(
-  //     //   `http://localhost:8080/camunda/getClaimActiveTaskID/${stringValue}`
-  //     // );
-  //     // console.log("Data from the first API call:", firstApiResponse.data);
-  //     // setData1(firstApiResponse.data);
-  
-  //     // Second API call
-  //     console.log("Making the second API call...");
-  //     alert("1.called")
-  //     const secondApiResponse = await axios.get(
-  //       `http://localhost:8080/camunda/getCompleteActiveTaskID/${stringValue}`
-  //     );
-  //     alert("callll......")
-  //     console.log("Data from the second API call:", secondApiResponse.data);
-  //     setData2(secondApiResponse.data);
-  
-  //   } catch (error) {
-  //     console.error("Error in the API calls:", error);
-  //   }
-  // };
-  
-  
+  const checkAssigneeStatus = async () => {
+    try {
+      // const apiRequestDelay = 1000;
+      //  await new Promise((resolve) => setTimeout(resolve, apiRequestDelay));
 
-  
+      setLoading(true);
 
-  const renderInput = (field, key) => {
-    if (!field) {
-      return null;
-    }
-
-    switch (field.Type) {
-      case "text":
-        return (
-          <CFormInput
-            key={key}
-            type="text"
-            id={field.Key}
-            name={field.Key}
-            value={formData[field.Key] }
-          />
-        );
-      case "email":
-        return (
-          <CFormInput
-            key={key}
-            type="email"
-            id={field.Key}
-            name={field.Key}
-            value={formData[field.Key] }
-          />
-        );
-      case "textfield":
-        return (
-          <CFormInput
-          type="text"
-            key={key}
-            id={field.ID}
-            name={field.Key}
-            value={formData[field.Key] }
-          />
-        );
-      case "date":
-        return (
-          <input
-            key={key}
-            type="date"
-            id={field.ID}
-            name={field.Key}
-            value={formData[field.Key] }
-          />
-        );
-      case "number":
-        return (
-          <CFormInput
-            key={key}
-            type="number"
-            id={field.Key}
-            name={field.Key}
-            value={formData[field.Key] }
-          />
-        );
-
-      default:
-        return null;
-    }
-  };
-
-  const renderInputsForArray = (fieldsArray, arrayKey) => {
-    return fieldsArray.map((field, index) => {
-      const labelWithFieldType = `${field.Label}`;
-      const key = `${arrayKey}_${index}`;
-      return (
-        <div key={key}>
-          <CFormLabel htmlFor={field.Key}>{labelWithFieldType}</CFormLabel>
-          {renderInput(field, key)}
-        </div>
+      const assigneeCheckApiResponse = await axios.get(
+        `http://localhost:8080/camunda/assigneeCheck/${stringValue}`
       );
-    });
-  };
-  const handleCancel=()=>{
-    navigate('/')
-  }
 
+      const assigneeState = assigneeCheckApiResponse.data.State;
+
+      if (assigneeState === "UnAssigned") {
+        console.log("State as ",assigneeState);
+        setClaim(false);
+      } else if(assigneeState === "Assigned"){
+        console.log("State as",assigneeState);
+
+        setClaim(true);
+      }
+    }
+   catch (error) {
+      console.error("Error in the assigneeCheck API call:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+  // const renderInputs = (data, prefix = "") => {
+  //   return claim
+  //     ? Object.entries(data).map(([key, value]) => {
+  //         const fullKey = prefix + key;
+  //         if (typeof value === "object") {
+  //           return renderInputs(value, fullKey + "_");
+  //         } else {
+  //           return renderInput(fullKey, key, value);
+  //         }
+  //       })
+  //     : null; // Return null when claim is false
+  // };
+  const renderInputs = () => {
+    return Object.entries(users).map(([key, value]) => (
+      <div key={key}>
+        <CFormLabel htmlFor={key}>{key}</CFormLabel>
+        <CFormInput
+          type="text"
+          id={key}
+          name={key}
+          value={value || ""}
+          readOnly={!claim} 
+        />
+      </div>
+    ));
+  };
+
+  const renderInput = (key, label, value) => {
+    return (
+      <div key={key}>
+        <CFormLabel htmlFor={key}>{label}</CFormLabel>
+        <CFormInput type="text" id={key} name={key} value={value || ""} />
+      </div>
+    );
+  };
+
+  const handleCancel = () => {
+    navigate("/");
+  };
+ 
   return (
     <div className="d-flex align-items-center justify-content-center min-vh-100">
       <CCol md="6">
         <CCard>
           <CCardHeader>USER FIELDS</CCardHeader>
           <CCardBody>
+         
             <CForm>
-              {Object.entries(users).map(([arrayKey, fieldsArray]) => (
-                renderInputsForArray(fieldsArray, arrayKey)
-              ))}
-              {claim ? (
+            {renderInputs()}
+
+              {claim !== null && (
                 <>
-                  {renderInput()}
-                  <CButton
-                    type="submit"
-                    color="danger"
-                    className="m-3"
-                    onClick={handleUnclaim}
-                    disabled={loading}
-                  >
-                    Unclaim
-                  </CButton>
-                  <CButton
-                    type="submit"
-                    color="danger"
-                    className="m-3"
-                    onClick={handleSubmit}
-                    disabled={loading}
-                  >
-                    Submit
-                  </CButton>
+                  {claim ? (
+                    <>
+                      <CButton
+                        type="button"
+                        color="danger"
+                        className="m-3"
+                        onClick={handleUnclaim}
+                        disabled={loading}
+                      >
+                        Unclaim
+                      </CButton>
+                      <CButton
+                        type="button"
+                        color="danger"
+                        className="m-3"
+                        onClick={handleSubmit}
+                        disabled={loading}
+                      >
+                        Submit
+                      </CButton>
+                    </>
+                  ) : (
+                    <CButton
+                      type="button"
+                      color="danger"
+                      className="m-3"
+                      onClick={handleClaim}
+                      disabled={loading}
+                    >
+                      Claim
+                    </CButton>
+                  )}
                 </>
-              ) : (
-                <CButton
-                  type="submit"
-                  color="danger"
-                  className="m-3"
-                  onClick={handleClaim}
-                  disabled={loading}
-                >
-                  Claim
-                </CButton>
               )}
-  
-              <CButton
-                type="submit"
-                color="danger"
-                className="m-3"
-                onClick={handleCancel}
-              >
-                Cancel
-              </CButton>  
-             
+
+            <CButton
+              type="button"
+              color="danger"
+              className="m-3"
+              onClick={handleCancel}
+            >
+              Cancel
+            </CButton>
             </CForm>
           </CCardBody>
         </CCard>
